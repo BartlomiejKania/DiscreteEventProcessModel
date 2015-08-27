@@ -48,6 +48,7 @@ namespace DiscreteEventProcessModel
 
         private void GenerateStates(string[] versions)
         {
+            States = new Collection<State>();
             List<string> descriptions = GetDescriptions(versions);
         }
 
