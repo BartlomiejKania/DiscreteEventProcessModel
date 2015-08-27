@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,12 @@ namespace DiscreteEventProcessModel
         public Form1()
         {
             InitializeComponent();
+        }
+
+        private void startButton_Click(object sender, EventArgs e)
+        {
+            string dataPath = Directory.GetCurrentDirectory() + "\\..\\..\\..\\CmsData.txt";
+            Automation automation = new Automation(dataPath);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace DiscreteEventProcessModel
         public Collection<State> States
         {
             get;
-            set;
+            private set;
         }
 
         public Collection<Operation> Operations
@@ -39,8 +40,29 @@ namespace DiscreteEventProcessModel
             set;
         }
 
-        public Automation()
+        public Automation(string dataPath)
         {
+            string[] rawVersions = File.ReadAllLines(dataPath);
+            GenerateStates(rawVersions);
+        }
+
+        private void GenerateStates(string[] versions)
+        {
+            List<string> descriptions = GetDescriptions(versions);
+        }
+
+        private static List<string> GetDescriptions(string[] versions)
+        {
+            List<string> descriptions = new List<string>();
+
+            foreach (string version in versions)
+            {
+                string[] splittedVersion = version.Split(':');
+                string description = splittedVersion.First();
+                descriptions.Add(description);
+            }
+
+            return descriptions;
         }
     }
 }
