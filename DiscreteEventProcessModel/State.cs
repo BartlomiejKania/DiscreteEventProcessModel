@@ -2,15 +2,15 @@
 {
     public class State
     {
-        public string[] Functionalities
+        public string Functionality
         {
             get;
             private set;
         }
 
-        public State(string[] functionalities)
+        public State(string functionality)
         {
-            Functionalities = functionalities;
+            Functionality = functionality;
         }
     }
 }

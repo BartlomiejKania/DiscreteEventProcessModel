@@ -50,6 +50,12 @@ namespace DiscreteEventProcessModel
         {
             States = new Collection<State>();
             List<string> descriptions = GetDescriptions(versions);
+
+            foreach (string description in descriptions)
+            {
+                State state = new State(description);
+                States.Add(state);
+            }
         }
 
         private static List<string> GetDescriptions(string[] versions)
