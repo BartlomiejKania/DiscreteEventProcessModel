@@ -7,10 +7,4 @@ Zarz¹dzanie kontami u¿ytkowników filtracja, systemy autoryzacji, anty-spam, prof
 Zaawansowane narzêdzia: WYSIWYG, RSS, metadane, Ajax, nacisk na pozycjonowanie:8:10:0;
 Integracja z zewnêtrznymi narzêdziami, systemami typu blogger, oraz zaawansowane zarzadzanie plikami:13:14:0;
 Nowoczesne jêzyki skryptowe JQuery, Mootols, automatyczny instalator pluginów:4:43:0;
-Nacisk na bezpieczeñstwo, uwierzytelnianie, zgodnoœæ z standardami, szyfrowanie danych, antyspamboot:37:3:0;
-Kopie robocze, notatki zaawansowane techniki buforowania oraz backup-owania:19:26:0;
-Multisites oraz multiposting – zarz¹dzanie wieloma stronami z poziomu jednej instalacji:15:19:0;
-Rozwój panelu administratora, dashboard, zarz¹dzanie pulpitami:6:4:0;
-Prze³om w strukturze kodu Ÿród³owego, zgodnoœæ ze standardami PHP 5 oraz MYSQL 5:3:3:0;
-Wydanie ostatniej stabilnej wersji systemu CMS:0:0:0;
 
