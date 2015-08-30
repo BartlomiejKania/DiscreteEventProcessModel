@@ -11,9 +11,8 @@ namespace DiscreteEventProcessModel
     public class Algorithm1
     {
         private Automation automation;
-        private Variations<State> variations;
-        private State initialState;
-        private uint iterator;
+        private List<List<State>> StateSets;
+        private int iterator;
 
         public Algorithm1(Automation automation)
         {
@@ -29,11 +28,45 @@ namespace DiscreteEventProcessModel
 
         private void DecomposeStatesToVariationSets()
         {
-            Collection<State> states = automation.States;
-            initialState = automation.States.First();
+            List<State> states = automation.States.ToList();
             iterator = 2;
-            states.Remove(initialState);
-            variations = new Variations<State>(states, states.Count);
+            StateSets = new List<List<State>>();
+
+            foreach(var state in states)
+            {
+                AddAllPaths(states, state);
+            }
+
+            StateSets.Add(new List<State> { states.Last() });
+        }
+
+        private void AddAllPaths(List<State> states, State state)
+        {
+            var states2 = states.Where(s => state.Functionalities.All(f => s.Functionalities.Contains(f)) &&
+            state != s && s.Functionalities.Count > state.Functionalities.Count);
+            foreach (var state2 in states2)
+            {
+                List<State> fullPath = new List<State>();
+                fullPath.Add(state);
+                AddState(state2, state, fullPath);
+                StateSets.Add(fullPath);
+            }
+        }
+
+        private void AddState(State bState, State state, List<State> fullPath)
+        {
+            fullPath.Add(bState);
+
+            if (bState.Functionalities.Count == automation.FunctionalitiesCount ||
+                (state != null && bState == state))
+            {
+                return;
+            }
+
+            State nextState = automation.States.First(s => s != bState &&
+            bState.Functionalities.All(f => s.Functionalities.Contains(f)) &&
+            s.Functionalities.Count > bState.Functionalities.Count);
+            AddState(nextState, bState, fullPath);
         }
 
         private void ComputeCriteria()

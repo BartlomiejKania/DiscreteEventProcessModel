@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Facet.Combinatorics;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -10,6 +11,9 @@ namespace DiscreteEventProcessModel
 {
     public class Automation
     {
+        public State InitialState;
+        public int FunctionalitiesCount;
+
         public Collection<State> States
         {
             get;
@@ -48,13 +52,33 @@ namespace DiscreteEventProcessModel
 
         private void GenerateStates(string[] versions)
         {
-            States = new Collection<State>();
+            List<State> states = new List<State>();
             List<string> descriptions = GetDescriptions(versions);
+            FunctionalitiesCount = descriptions.Count - 1;
 
-            foreach (string description in descriptions)
+            string initialDescription = descriptions.First();
+            InitialState = new State(new Collection<string> { initialDescription });
+            descriptions.Remove(initialDescription);
+
+            for (int i = 1; i <descriptions.Count + 1; i++)
             {
-                State state = new State(description);
-                States.Add(state);
+                Variations<string> v = new Variations<string>(descriptions, i);
+
+                foreach(var variation in v)
+                {
+                    State state = new State(new Collection<string>(variation));
+                    states.Add(state);
+                }
+            }
+
+            States = new Collection<State>();
+
+            foreach (var state in states)
+            {
+                if (!States.Any(s => state.Functionalities.All(f => s.Functionalities.Contains(f))))
+                {
+                    States.Add(state);
+                }
             }
         }
 
@@ -62,7 +86,7 @@ namespace DiscreteEventProcessModel
         {
             List<string> descriptions = new List<string>();
 
-            foreach (string version in versions)
+            foreach (string version in versions.Where(v => !string.IsNullOrEmpty(v)))
             {
                 string[] splittedVersion = version.Split(':');
                 string description = splittedVersion.First();

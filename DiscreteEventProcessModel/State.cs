@@ -1,16 +1,19 @@
-﻿namespace DiscreteEventProcessModel
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+
+namespace DiscreteEventProcessModel
 {
     public class State
     {
-        public string Functionality
+        public HashSet<string> Functionalities
         {
             get;
             private set;
         }
 
-        public State(string functionality)
+        public State(Collection<string> functionalities)
         {
-            Functionality = functionality;
+            Functionalities = new HashSet<string>(functionalities);
         }
     }
 }
