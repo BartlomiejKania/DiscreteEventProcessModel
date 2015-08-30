@@ -22,6 +22,8 @@ namespace DiscreteEventProcessModel
         {
             string dataPath = Directory.GetCurrentDirectory() + "\\..\\..\\..\\CmsData.txt";
             Automation automation = new Automation(dataPath);
+            Algorithm1 algorithm1 = new Algorithm1(automation);
+            algorithm1.Run();
         }
     }
 }
