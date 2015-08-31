@@ -26,10 +26,10 @@ namespace DiscreteEventProcessModel
             set;
         }
 
-        public Function StateTransitionFunction
+        public Collection<Transition> Transitions
         {
             get;
-            set;
+            private set;
         }
 
         public Collection<State> InitialStates
@@ -48,6 +48,7 @@ namespace DiscreteEventProcessModel
         {
             string[] rawVersions = File.ReadAllLines(dataPath);
             GenerateStates(rawVersions);
+            GenerateTransitions();
         }
 
         private void GenerateStates(string[] versions)
@@ -94,6 +95,24 @@ namespace DiscreteEventProcessModel
             }
 
             return descriptions;
+        }
+
+        private void GenerateTransitions()
+        {
+            Transitions = new Collection<Transition>();
+
+            foreach (State state in States)
+            {
+                List<State> possibleNextStates = States.Where(
+                    s => state.Functionalities.All(f => s.Functionalities.Contains(f)) &&
+                    state != s).ToList();
+
+                foreach (var possibleNextState in possibleNextStates)
+                {
+                    Transition transition = new Transition(state, possibleNextState);
+                    Transitions.Add(transition);
+                }
+            }
         }
     }
 }
