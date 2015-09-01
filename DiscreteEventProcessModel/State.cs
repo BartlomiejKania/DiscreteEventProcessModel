@@ -11,9 +11,16 @@ namespace DiscreteEventProcessModel
             private set;
         }
 
+        public bool FinalState
+        {
+            get;
+            set;
+        }
+
         public State(Collection<string> functionalities)
         {
             Functionalities = new HashSet<string>(functionalities);
+            FinalState = false;
         }
     }
 }

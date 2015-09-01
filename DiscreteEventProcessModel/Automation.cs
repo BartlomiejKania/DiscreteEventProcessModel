@@ -44,26 +44,38 @@ namespace DiscreteEventProcessModel
             set;
         }
 
-        public Automation(string dataPath)
+        public List<Funcionality> Functionalities
         {
-            string[] rawVersions = File.ReadAllLines(dataPath);
-            GenerateStates(rawVersions);
+            get;
+            private set;
+        }
+
+        public List<string> Descriptions
+        {
+            get;
+            private set;
+        }
+
+        public Automation(List<Funcionality> funcionalities)
+        {
+            Functionalities = funcionalities;
+            Descriptions = funcionalities.Select(f => f.Description).ToList();
+            GenerateStates();
             GenerateTransitions();
         }
 
-        private void GenerateStates(string[] versions)
+        private void GenerateStates()
         {
             List<State> states = new List<State>();
-            List<string> descriptions = GetDescriptions(versions);
-            FunctionalitiesCount = descriptions.Count - 1;
+            FunctionalitiesCount = Descriptions.Count - 1;
 
-            string initialDescription = descriptions.First();
+            string initialDescription = Descriptions.First();
             InitialState = new State(new Collection<string> { initialDescription });
-            descriptions.Remove(initialDescription);
+            Descriptions.Remove(initialDescription);
 
-            for (int i = 1; i <descriptions.Count + 1; i++)
+            for (int i = 1; i <Descriptions.Count + 1; i++)
             {
-                Variations<string> v = new Variations<string>(descriptions, i);
+                Variations<string> v = new Variations<string>(Descriptions, i);
 
                 foreach(var variation in v)
                 {
@@ -81,20 +93,6 @@ namespace DiscreteEventProcessModel
                     States.Add(state);
                 }
             }
-        }
-
-        private static List<string> GetDescriptions(string[] versions)
-        {
-            List<string> descriptions = new List<string>();
-
-            foreach (string version in versions.Where(v => !string.IsNullOrEmpty(v)))
-            {
-                string[] splittedVersion = version.Split(':');
-                string description = splittedVersion.First();
-                descriptions.Add(description);
-            }
-
-            return descriptions;
         }
 
         private void GenerateTransitions()

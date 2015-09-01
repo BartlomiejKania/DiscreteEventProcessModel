@@ -11,8 +11,10 @@ namespace DiscreteEventProcessModel
     public class Algorithm1
     {
         private Automation automation;
-        private List<List<State>> StateSets;
+        private List<Path> Paths;
+        private List<Path> ReducedNetwork;
         private int iterator;
+        private Path SupervisorTrajectory;
 
         public Algorithm1(Automation automation)
         {
@@ -21,23 +23,31 @@ namespace DiscreteEventProcessModel
 
         public void Run()
         {
-            DecomposeStatesToVariationSets();
+            DecomposeStatesToLevelSets();
+            SetSuperVisorTrajectory();
             ComputeCriteria();
             AlgorithmLoop();
         }
 
-        private void DecomposeStatesToVariationSets()
+        private void DecomposeStatesToLevelSets()
         {
             List<State> states = automation.States.ToList();
-            iterator = 2;
-            StateSets = new List<List<State>>();
+            iterator = 1;
+            Paths = new List<Path>();
 
             foreach(var state in states)
             {
                 AddAllPaths(states, state);
             }
 
-            StateSets.Add(new List<State> { states.Last() });
+            State finalState = states.Last();
+            finalState.FinalState = true;
+            Paths.Add(new Path(new List<State> { finalState }));
+
+            foreach (var stateSet in Paths)
+            {
+                stateSet.Trajectory.Add(finalState);
+            }
         }
 
         private void AddAllPaths(List<State> states, State state)
@@ -49,7 +59,7 @@ namespace DiscreteEventProcessModel
                 List<State> fullPath = new List<State>();
                 fullPath.Add(state);
                 AddState(state2, state, fullPath);
-                StateSets.Add(fullPath);
+                Paths.Add(new Path(fullPath));
             }
         }
 
@@ -69,25 +79,52 @@ namespace DiscreteEventProcessModel
             AddState(nextState, bState, fullPath);
         }
 
+        private void SetSuperVisorTrajectory()
+        {
+            SupervisorTrajectory = Paths.First();
+        }
+
         private void ComputeCriteria()
         {
-            throw new NotImplementedException();
+            foreach(var path in Paths)
+            {
+                State firstState = path.Trajectory.ElementAt(0);
+                int functionalitiesCount = firstState.Functionalities.Count;
+                int cost = 0;
+
+                foreach(var funcionality in firstState.Functionalities)
+                {
+                    cost += automation.Functionalities.First(f => f.Description == funcionality).Cost;
+                }
+
+                //path.IncreaseCost(cost*)
+            }
         }
 
         private void AlgorithmLoop()
         {
-            FindTransitions();
-            FindTheCharacteristics();
+            FindAllowedTransitions();
+            Step4i();
             ChooseLeastDistance();
             CheckStopCriterium();
         }
 
-        private void FindTransitions()
+        private void FindAllowedTransitions()
         {
-            throw new NotImplementedException();
+            State supervisorState = SupervisorTrajectory.Trajectory.ElementAt(iterator);
+            ReducedNetwork = new List<Path>();
+            foreach (var stateSet in Paths)
+            {
+                State nextState = stateSet.Trajectory.ElementAt(1);
+
+                if (supervisorState.Functionalities.All(f => nextState.Functionalities.Contains(f)))
+                {
+                    ReducedNetwork.Add(stateSet);
+                }
+            }
         }
 
-        private void FindTheCharacteristics()
+        private void Step4i()
         {
             throw new NotImplementedException();
         }

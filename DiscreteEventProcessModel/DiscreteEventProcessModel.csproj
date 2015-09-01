@@ -57,6 +57,8 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Funcionality.cs" />
+    <Compile Include="Path.cs" />
     <Compile Include="Transition.cs" />
     <Compile Include="Operation.cs" />
     <Compile Include="Program.cs" />
@@ -74,6 +76,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="Properties\DataSources\Automation.datasource" />
+    <None Include="Properties\DataSources\Funcionality.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
