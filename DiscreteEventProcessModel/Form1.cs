@@ -13,7 +13,6 @@ namespace DiscreteEventProcessModel
 {
     public partial class Form1 : Form
     {
-        private Automation automation;
         List<Funcionality> data = new List<Funcionality>();
 
         public Form1()
