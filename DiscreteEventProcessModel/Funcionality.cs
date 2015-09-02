@@ -8,21 +8,11 @@ namespace DiscreteEventProcessModel
 {
     public class Funcionality
     {
-        public string Description
-        {
-            get;
-            set;
-        }
-
-        public int Cost
-        {
-            get;
-            set;
-        }
+        public string Description { get; private set; }
 
         public Funcionality(string description)
         {
-            Description = description;
+            this.Description = description;
         }
     }
 }

@@ -1,9 +1,10 @@
+3
 Wydanie pierwszej stabilnej wersji systemu CMS:28:56:0;
 Nacisk na jakość pozycjonowania, zamiana miejscami elementów strony instalator z poziomu przeglądarki, rekurencyjne drzewo menu/podmenu:1:21:0;
 Architektura modułowa systemu, pluginy i wtyczki, rozbudowa systemu zarządzania plikami graficznymi:38:54:0;
 Rozbudowany system językowy, tłumaczenia panelu administracyjnego, ekspansja systemu na Świat:1:6:0;
 Rozbudowany system zarządzania wyglądem strony, komponenty oraz widgety, szablony i skórki:10:22:0;
 Zarządzanie kontami użytkowników filtracja, systemy autoryzacji, anty-spam, profilowanie kont użytkowników:33:41:0;
-Zaawansowane narzędzia: WYSIWYG, RSS, metadane, Ajax, nacisk na pozycjonowanie:8:10:0;
+Zaawansowane narzędzia - WYSIWYG, RSS, metadane, Ajax, nacisk na pozycjonowanie:8:10:0;
 Integracja z zewnętrznymi narzędziami, systemami typu blogger, oraz zaawansowane zarzadzanie plikami:13:14:0;
 Nowoczesne języki skryptowe JQuery, Mootols, automatyczny instalator pluginów:4:43:0;

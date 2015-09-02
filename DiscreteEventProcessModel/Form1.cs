@@ -13,7 +13,8 @@ namespace DiscreteEventProcessModel
 {
     public partial class Form1 : Form
     {
-        List<Funcionality> data = new List<Funcionality>();
+        List<Funcionality> mFunctionalities;
+        List<Company> mCompanies;
 
         public Form1()
         {
@@ -22,40 +23,49 @@ namespace DiscreteEventProcessModel
 
         private void startButton_Click(object sender, EventArgs e)
         {
-            Automation automation = new Automation(data);
-            Algorithm1 algorithm1 = new Algorithm1(automation);
+            Algorithm1 algorithm1 = new Algorithm1(mCompanies, mFunctionalities);
             algorithm1.Run();
+        }
+
+        private void ParseFuncionalityAndFillCompanies(String line)
+        {
+            string[] splittedVersion = line.Split(':');
+            string description = splittedVersion[0];
+
+            Funcionality functionality = new Funcionality(description);
+            mFunctionalities.Add(functionality);
+
+            for (int i = 0; i < mCompanies.Count; i++)
+            {
+                int costForCompany = int.Parse(splittedVersion[i + 1].Replace(";",""));
+
+                mCompanies[i].addRequiredFuncionalityWithCost(functionality, costForCompany);
+            }
         }
 
         private void loadDatabutton_Click(object sender, EventArgs e)
         {
             string dataPath = Directory.GetCurrentDirectory() + "\\..\\..\\..\\CmsData.txt";
             string[] rawVersions = File.ReadAllLines(dataPath, Encoding.UTF8);
-            var descriptions = GetDescriptions(rawVersions);
-
-            foreach (var description in descriptions)
-            {
-                var func = new Funcionality(description);
-                data.Add(func);
-            }
             
-            dataGridView1.DataSource = data;
+            int numberOfCompnies = int.Parse(rawVersions.First());
+            mCompanies = new List<Company>(numberOfCompnies);
+
+            for (int i = 0; i < numberOfCompnies; i++)
+            {
+                mCompanies.Add(new Company());
+            }
+
+            mFunctionalities = new List<Funcionality>(rawVersions.Count() - 1);
+
+            foreach (var line in rawVersions.Skip(1))
+            {
+                ParseFuncionalityAndFillCompanies(line);
+            }
+
+            dataGridView1.DataSource = mFunctionalities;
             loadDatabutton.Enabled = false;
             startButton.Enabled = true;
-        }
-
-        private List<string> GetDescriptions(string[] versions)
-        {
-            List<string> descriptions = new List<string>();
-
-            foreach (string version in versions.Where(v => !string.IsNullOrEmpty(v)))
-            {
-                string[] splittedVersion = version.Split(':');
-                string description = splittedVersion.First();
-                descriptions.Add(description);
-            }
-
-            return descriptions;
         }
 
         private void Form1_Load(object sender, EventArgs e)
