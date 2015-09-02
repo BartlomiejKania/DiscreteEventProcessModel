@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiscreteEventProcessModel", "DiscreteEventProcessModel\DiscreteEventProcessModel.csproj", "{D3D967EF-F3E6-4487-A11B-DF20A4F2BC37}"
 EndProject
 Global
