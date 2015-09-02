@@ -18,7 +18,7 @@ namespace DiscreteEventProcessModel
         {
             get;
             set;
-        } = 1;
+        }
 
         public Funcionality(string description)
         {
