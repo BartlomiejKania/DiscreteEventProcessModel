@@ -57,5 +57,11 @@ namespace DiscreteEventProcessModel
 
             return descriptions;
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            this.loadDatabutton_Click(null, null);
+            this.startButton_Click(null, null);
+        }
     }
 }
