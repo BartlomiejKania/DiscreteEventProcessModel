@@ -10,21 +10,20 @@ namespace DiscreteEventProcessModel
 {
     public class Algorithm1
     {
-        private Automation automation;
-        private List<Path> Paths;
-        private int Iterator;
+        private Automation mAutomation;
+        private List<Path> mPaths;
+        private int mIterator;
 
-        private List<string> supervisorFunctionalities = new List<string>();
-        private List<List<State>> LevelSets
+        private List<string> mSupervisorFunctionalities = new List<string>();
+        private List<List<State>> mLevelSets
         {
             get;
             set;
         }
 
-
         public Algorithm1(Automation automation)
         {
-            this.automation = automation;
+            mAutomation = automation;
         }
 
         public void Run()
@@ -37,17 +36,17 @@ namespace DiscreteEventProcessModel
         private void Step1()
         {
             DecomposeStatesToLevelSets();
-            Iterator = 1;
+            mIterator = 1;
         }
 
         private void DecomposeStatesToLevelSets()
         {
-            LevelSets = new List<List<State>>();
+            mLevelSets = new List<List<State>>();
 
-            for(int i = 1; i <= automation.FunctionalitiesCount; i++)
+            for(int i = 1; i <= mAutomation.FunctionalitiesCount; i++)
             {
-                List<State> levelSet = automation.States.Where(s => s.Functionalities.Count == i).ToList();
-                LevelSets.Add(levelSet);
+                List<State> levelSet = mAutomation.States.Where(s => s.Functionalities.Count == i).ToList();
+                mLevelSets.Add(levelSet);
             }
         }
 
@@ -58,15 +57,15 @@ namespace DiscreteEventProcessModel
 
         private void ComputeCriteria()
         {
-            Paths = new List<Path>();
+            mPaths = new List<Path>();
 
-            foreach (State stateQ1 in LevelSets.ElementAt(0))
+            foreach (State stateQ1 in mLevelSets.ElementAt(0))
             {
                 Path path = new Path(new List<State> { stateQ1 });
                 string functionality = stateQ1.Functionalities.ElementAt(0);
-                int cost = automation.Functionalities.First(f => f.Description == functionality).Cost;
+                int cost = mAutomation.Functionalities.First(f => f.Description == functionality).Cost;
                 path.IncreaseCost(cost);
-                Paths.Add(path);
+                mPaths.Add(path);
             }
         }
 
@@ -82,9 +81,9 @@ namespace DiscreteEventProcessModel
         {
             List<Path> extendedPaths = new List<Path>();
 
-            foreach (Path path in Paths)
+            foreach (Path path in mPaths)
             {
-                foreach (State stateQi in LevelSets.ElementAt(Iterator))
+                foreach (State stateQi in mLevelSets.ElementAt(mIterator))
                 {
                     if (path.Trajectory.All(s => s.Functionalities.All(f => stateQi.Functionalities.Contains(f))))
                     {
@@ -98,9 +97,9 @@ namespace DiscreteEventProcessModel
                 }
             }
 
-            if (supervisorFunctionalities.Count > 0)
+            if (mSupervisorFunctionalities.Count > 0)
             {
-                extendedPaths = extendedPaths.Where(p => supervisorFunctionalities.
+                extendedPaths = extendedPaths.Where(p => mSupervisorFunctionalities.
                 All(f => p.Trajectory.Any(s => s.Functionalities.Contains(f)))).ToList();
             }
         }
