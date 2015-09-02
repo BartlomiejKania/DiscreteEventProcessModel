@@ -16,6 +16,7 @@ namespace DiscreteEventProcessModel
     {
         private List<SimulationData> mSimulationData = new List<SimulationData>();
         List<Company> mCompanies;
+        List<Funcionality> mFunctionalities;
 
         public List<Funcionality> WordPressFunctionalities
         {
@@ -59,9 +60,7 @@ namespace DiscreteEventProcessModel
 
             for (int i = 0; i < mCompanies.Count; i++)
             {
-                int costForCompany = int.Parse(splittedVersion[i + 1].Replace(";",""));
-
-                mCompanies[i].addRequiredFuncionalityWithCost(functionality, costForCompany);
+                mCompanies[i].addRequiredFuncionalityWithCost(functionality, 0);
             }
         }
 
@@ -70,26 +69,21 @@ namespace DiscreteEventProcessModel
             string dataPath = Directory.GetCurrentDirectory() + "\\..\\..\\..\\CmsData.txt";
             string[] rawVersions = File.ReadAllLines(dataPath, Encoding.UTF8);
             
-            int numberOfCompnies = int.Parse(rawVersions.First());
-            mCompanies = new List<Company>(numberOfCompnies);
+            int numberOfCompanies = 3;
+            mCompanies = new List<Company>(numberOfCompanies);
 
-            for (int i = 0; i < numberOfCompnies; i++)
+            for (int i = 0; i < numberOfCompanies; i++)
             {
                 mCompanies.Add(new Company());
             }
-            newDataGridView1.DataSource = mSimulationData;
-            newListBox4.Items.AddRange(descriptions.ToArray());
-
-            loadDatabutton.Enabled = false;
-            startButton.Enabled = true;
-        }
 
             mFunctionalities = new List<Funcionality>(rawVersions.Count() - 1);
+            List<string> descriptions = new List<string>();
 
-            foreach (var line in rawVersions.Skip(1))
+            foreach (string line in rawVersions.Where(l => !String.IsNullOrEmpty(l)))
             {
                 ParseFuncionalityAndFillCompanies(line);
-                string[] splittedVersion = version.Split(':');
+                string[] splittedVersion = line.Split(':');
                 string description = splittedVersion.First();
                 int wordPressCost = int.Parse(splittedVersion[1]);
                 int joomlaCost = int.Parse(splittedVersion[2]);
@@ -101,7 +95,9 @@ namespace DiscreteEventProcessModel
                 descriptions.Add(description);
             }
 
-            dataGridView1.DataSource = mFunctionalities;
+            newDataGridView1.DataSource = mSimulationData;
+            newListBox4.Items.AddRange(descriptions.ToArray());
+
             loadDatabutton.Enabled = false;
             startButton.Enabled = true;
         }
@@ -126,6 +122,7 @@ namespace DiscreteEventProcessModel
             //this.startButton_Click(null, null);
         }
         int rowIndex, columnIndex;
+
         /// <summary>
         /// When ListBox is double clicked, called this method.
         /// Add select item of ListBox into appropriate cell of the DataGridView.
