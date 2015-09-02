@@ -33,6 +33,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AdvDataGridView">
+      <HintPath>..\AdvDataGridView.dll</HintPath>
+    </Reference>
+    <Reference Include="AdvListBox">
+      <HintPath>..\AdvListBox.dll</HintPath>
+    </Reference>
+    <Reference Include="CheckBoxComboBox">
+      <HintPath>..\CheckBoxComboBox.dll</HintPath>
+    </Reference>
     <Reference Include="Combinatorics">
       <HintPath>..\Combinatorics.dll</HintPath>
     </Reference>
@@ -60,6 +69,7 @@
     </Compile>
     <Compile Include="Funcionality.cs" />
     <Compile Include="Path.cs" />
+    <Compile Include="SimulationData.cs" />
     <Compile Include="Transition.cs" />
     <Compile Include="Operation.cs" />
     <Compile Include="Program.cs" />
@@ -79,6 +89,7 @@
     </Compile>
     <None Include="Properties\DataSources\Automation.datasource" />
     <None Include="Properties\DataSources\Funcionality.datasource" />
+    <None Include="Properties\DataSources\SimulationData.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

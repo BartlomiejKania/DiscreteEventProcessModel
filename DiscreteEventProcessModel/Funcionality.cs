@@ -10,9 +10,22 @@ namespace DiscreteEventProcessModel
     {
         public string Description { get; private set; }
 
+        public List<string> DependsOn
+        {
+            get;
+            set;
+        }
+
         public Funcionality(string description)
         {
             this.Description = description;
+        }
+
+        public Funcionality(string description, int cost, List<string> dependsOn)
+        {
+            Description = description;
+            Cost = cost;
+            DependsOn = dependsOn;
         }
     }
 }
