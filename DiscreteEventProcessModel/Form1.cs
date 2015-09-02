@@ -30,7 +30,7 @@ namespace DiscreteEventProcessModel
         private void loadDatabutton_Click(object sender, EventArgs e)
         {
             string dataPath = Directory.GetCurrentDirectory() + "\\..\\..\\..\\CmsData.txt";
-            string[] rawVersions = File.ReadAllLines(dataPath);
+            string[] rawVersions = File.ReadAllLines(dataPath, Encoding.UTF8);
             var descriptions = GetDescriptions(rawVersions);
 
             foreach (var description in descriptions)
