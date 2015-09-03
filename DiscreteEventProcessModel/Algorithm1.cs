@@ -13,6 +13,10 @@ namespace DiscreteEventProcessModel
         private IEnumerable<Company> mAllComapnies;
         private IEnumerable<Funcionality> mAllFunctionalities;
 
+        private List<int> A; //No idea what should conatins this array
+        private List<int> B; //No idea what should conatins this array
+        private List<int> C; //No idea what should conatins this array
+
         public Algorithm1(IEnumerable<Company> allCompanies, IEnumerable<Funcionality> allFunctionalities)
         {
             mAllComapnies = allCompanies;
@@ -21,95 +25,74 @@ namespace DiscreteEventProcessModel
 
         public void Run()
         {
-            Step1();
-            Step2();
-            AlgorithmLoop();
+            //Step1(); //Decomposition doesn't needed
+            //Step2(); //Criteria are determined in the input data
+
+            while (Step6())
+            {
+                foreach (var company in mAllComapnies.Where(company => company.State == Company.CompanyState.Idle))
+                {
+                    Step3i(company);
+                    //Step4i(company);
+                    //Step5i(company);
+                }
+
+                int timeToDevelopNextFuncionality = mAllComapnies.Min(company => company.TimeToDevelopNextFunctionality);
+
+                foreach (var company in mAllComapnies)
+                {
+                    company.TimeToDevelopNextFunctionality -= timeToDevelopNextFuncionality;
+
+                    if (company.TimeToDevelopNextFunctionality == 0)
+                    {
+                        company.finishDevelopFuncionality();
+                    }
+                }
+            }
         }
 
-        private void Step1()
+        private void Step3i(Company company)
         {
-            DecomposeStatesToLevelSets();
-            //mIterator = 1;
+            Console.Out.WriteLine("Step3i");
+            IEnumerable<Company> otherCompanies = mAllComapnies.Where(c => c != company);
+            List<Funcionality> priorityFunctionalities = new List<Funcionality>();
+
+            foreach (var otherCompany in otherCompanies)
+            {
+                priorityFunctionalities.AddRange(otherCompany.ImplementedFunctionalites.Except(company.ImplementedFunctionalites));
+            }
+
+            if (priorityFunctionalities.Count != 0)
+            {
+                priorityFunctionalities.Sort();
+            }
+
+            priorityFunctionalities = priorityFunctionalities.Distinct().ToList();
+
+            List<Funcionality> missingFunctionalities = priorityFunctionalities.Count != 0 ? priorityFunctionalities : company.MissingFunctionalities;
+
+            var functionalitesWithCost = missingFunctionalities
+                .Select(func => new { Functionality = func, Cost = company.functionalityCost(func) });
+
+            var functionalityToDevelop = functionalitesWithCost
+                .First(pair => pair.Cost == functionalitesWithCost.Min(internalPair => internalPair.Cost)).Functionality;
+
+            company.developFunctionality(functionalityToDevelop);
         }
 
-        private void DecomposeStatesToLevelSets()
+        private void Step4i(Company company)
         {
-            //mLevelSets = new List<List<State>>();
-
-            //for(int i = 1; i <= mAutomation.FunctionalitiesCount; i++)
-            //{
-            //    List<State> levelSet = mAutomation.States.Where(s => s.Functionalities.Count == i).ToList();
-            //    mLevelSets.Add(levelSet);
-            //}
+            Console.Out.WriteLine("Step4i");
         }
 
-        private void Step2()
+        private void Step5i(Company company)
         {
-            ComputeCriteria();
+            Console.Out.WriteLine("Step5i");
         }
 
-        private void ComputeCriteria()
+        private bool Step6()
         {
-            //mPaths = new List<Path>();
-
-            //foreach (State stateQ1 in mLevelSets.ElementAt(0))
-            //{
-            //    Path path = new Path(new List<State> { stateQ1 });
-            //    string functionality = stateQ1.Functionalities.ElementAt(0);
-            //    int cost = mAutomation.Functionalities.First(f => f.Description == functionality).Cost;
-            //    path.IncreaseCost(cost);
-            //    mPaths.Add(path);
-            //}
-        }
-
-        private void AlgorithmLoop()
-        {
-            FindAllowedTransitions();
-            Step4i();
-            Step5i();
-            Step6i();
-        }
-
-        private void FindAllowedTransitions()
-        {
-            //List<Path> extendedPaths = new List<Path>();
-
-            //foreach (Path path in mPaths)
-            //{
-            //    foreach (State stateQi in mLevelSets.ElementAt(mIterator))
-            //    {
-            //        if (path.Trajectory.All(s => s.Functionalities.All(f => stateQi.Functionalities.Contains(f))))
-            //        {
-            //            List<State> newTrajectory = new List<State>();
-            //            newTrajectory.AddRange(path.Trajectory);
-            //            newTrajectory.Add(stateQi);
-            //            Path extendedPath = new Path(newTrajectory);
-            //            extendedPath.IncreaseCost(path.ActualCost);
-            //            extendedPaths.Add(new Path(newTrajectory));
-            //        }
-            //    }
-            //}
-
-            //if (mSupervisorFunctionalities.Count > 0)
-            //{
-            //    extendedPaths = extendedPaths.Where(p => mSupervisorFunctionalities.
-            //    All(f => p.Trajectory.Any(s => s.Functionalities.Contains(f)))).ToList();
-            //}
-        }
-
-        private void Step4i()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void Step5i()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void Step6i()
-        {
-            throw new NotImplementedException();
+            return mAllComapnies.Any(company => company.State != Company.CompanyState.DoneAllFunctionalities);
         }
     }
 }

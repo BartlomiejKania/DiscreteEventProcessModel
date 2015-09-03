@@ -15,8 +15,8 @@ namespace DiscreteEventProcessModel
     public partial class Form1 : Form
     {
         private List<SimulationData> mSimulationData = new List<SimulationData>();
-        List<Company> mCompanies;
-        List<Funcionality> mFunctionalities;
+        List<Company> mCompanies = new List<Company>();
+        List<Funcionality> mFunctionalities = new List<Funcionality>();
 
         public List<Funcionality> WordPressFunctionalities
         {
@@ -45,44 +45,21 @@ namespace DiscreteEventProcessModel
 
         private void startButton_Click(object sender, EventArgs e)
         {
-            FillCompaniesFunctionalities();
             Algorithm1 algorithm1 = new Algorithm1(mCompanies, mFunctionalities);
             algorithm1.Run();
-        }
 
-        private void ParseFuncionalityAndFillCompanies(String line)
-        {
-            string[] splittedVersion = line.Split(':');
-            string description = splittedVersion[0];
-
-            Funcionality functionality = new Funcionality(description);
-            mFunctionalities.Add(functionality);
-
-            for (int i = 0; i < mCompanies.Count; i++)
-            {
-                mCompanies[i].addRequiredFuncionalityWithCost(functionality, 0);
-            }
+            //mCompanies[i].Name
+            //mCompanies[i].OrderOfFunctionalitiesImplementationWithCosts
         }
 
         private void loadDatabutton_Click(object sender, EventArgs e)
         {
             string dataPath = Directory.GetCurrentDirectory() + "\\..\\..\\..\\CmsData.txt";
             string[] rawVersions = File.ReadAllLines(dataPath, Encoding.UTF8);
-            
-            int numberOfCompanies = 3;
-            mCompanies = new List<Company>(numberOfCompanies);
-
-            for (int i = 0; i < numberOfCompanies; i++)
-            {
-                mCompanies.Add(new Company());
-            }
-
-            mFunctionalities = new List<Funcionality>(rawVersions.Count() - 1);
             List<string> descriptions = new List<string>();
 
             foreach (string line in rawVersions.Where(l => !String.IsNullOrEmpty(l)))
             {
-                ParseFuncionalityAndFillCompanies(line);
                 string[] splittedVersion = line.Split(':');
                 string description = splittedVersion.First();
                 int wordPressCost = int.Parse(splittedVersion[1]);
@@ -95,6 +72,8 @@ namespace DiscreteEventProcessModel
                 descriptions.Add(description);
             }
 
+            FillCompaniesFunctionalities();
+
             newDataGridView1.DataSource = mSimulationData;
             newListBox4.Items.AddRange(descriptions.ToArray());
 
@@ -104,15 +83,24 @@ namespace DiscreteEventProcessModel
 
         private void FillCompaniesFunctionalities()
         {
-            WordPressFunctionalities = new List<Funcionality>();
-            JoomlaFunctionalities = new List<Funcionality>();
-            DrupalFunctionalities = new List<Funcionality>();
+            int numberOfCompanies = 3;
+            List<String> companyNames = new List<String>{"WordPress", "Joomla", "Drupal"};
+
+            for (int i = 0; i < numberOfCompanies; i++)
+            {
+                mCompanies.Add(new Company());
+                mCompanies[i].Name = companyNames[i];
+            }
 
             foreach (SimulationData data in mSimulationData)
             {
-                WordPressFunctionalities.Add(new Funcionality(data.Functionality, data.WordPressCost, data.DependensOn));
-                JoomlaFunctionalities.Add(new Funcionality(data.Functionality, data.JoomlaCost, data.DependensOn));
-                DrupalFunctionalities.Add(new Funcionality(data.Functionality, data.DrupalCost, data.DependensOn));
+                Funcionality func = new Funcionality(data.Functionality, data.DependensOn);
+
+                mCompanies[0].addRequiredFuncionalityWithCost(func, data.WordPressCost);
+                mCompanies[1].addRequiredFuncionalityWithCost(func, data.JoomlaCost);
+                mCompanies[2].addRequiredFuncionalityWithCost(func, data.DrupalCost);
+
+                mFunctionalities.Add(func);
             }
         }
 
@@ -121,6 +109,7 @@ namespace DiscreteEventProcessModel
             //this.loadDatabutton_Click(null, null);
             //this.startButton_Click(null, null);
         }
+
         int rowIndex, columnIndex;
 
         /// <summary>

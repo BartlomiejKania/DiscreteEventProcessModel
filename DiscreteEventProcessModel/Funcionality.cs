@@ -6,15 +6,12 @@ using System.Threading.Tasks;
 
 namespace DiscreteEventProcessModel
 {
-    public class Funcionality
+    public class Funcionality : IComparable<Funcionality>
     {
-        public string Description { get; private set; }
+        private static int nextId = 0;
+        private int mId;
 
-        public int Cost
-        {
-            get;
-            set;
-        }
+        public string Description { get; private set; }
 
         public List<string> DependsOn
         {
@@ -22,16 +19,16 @@ namespace DiscreteEventProcessModel
             set;
         }
 
-        public Funcionality(string description)
+        public Funcionality(string description, List<string> dependsOn)
         {
-            this.Description = description;
+            mId = nextId++;
+            Description = description;
+            DependsOn = dependsOn;
         }
 
-        public Funcionality(string description, int cost, List<string> dependsOn)
+        public int CompareTo(Funcionality other)
         {
-            Description = description;
-            Cost = cost;
-            DependsOn = dependsOn;
+            return mId.CompareTo(other.mId);
         }
     }
 }
