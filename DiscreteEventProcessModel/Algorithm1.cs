@@ -69,15 +69,37 @@ namespace DiscreteEventProcessModel
 
             priorityFunctionalities = priorityFunctionalities.Distinct().ToList();
 
-            List<Funcionality> missingFunctionalities = priorityFunctionalities.Count != 0 ? priorityFunctionalities : company.MissingFunctionalities;
+            bool leader = priorityFunctionalities.Count == 0;
+            List<Funcionality> missingFunctionalities = leader ?  company.MissingFunctionalities : priorityFunctionalities;
+
+            if (!leader)
+            {
+                missingFunctionalities = ChooseBestFunctionalities(missingFunctionalities, company);
+            }
 
             var functionalitesWithCost = missingFunctionalities
                 .Select(func => new { Functionality = func, Cost = company.functionalityCost(func) });
 
-            var functionalityToDevelop = functionalitesWithCost
-                .First(pair => pair.Cost == functionalitesWithCost.Min(internalPair => internalPair.Cost)).Functionality;
+            Funcionality functionalityToDevelop = null;
+
+            functionalityToDevelop = functionalitesWithCost
+                    .First(pair => pair.Cost == functionalitesWithCost.Min(internalPair => internalPair.Cost)).Functionality;
 
             company.developFunctionality(functionalityToDevelop);
+        }
+
+        private List<Funcionality> ChooseBestFunctionalities(IEnumerable<Funcionality> missingFunctionalities, Company company)
+        {
+            MarketReaction reaction = MarketReaction.HighGrowth;
+            List<Funcionality> bestFunctionalities = new List<Funcionality>();
+
+            while (bestFunctionalities.Count() == 0)
+            {
+                bestFunctionalities = missingFunctionalities.Where(func => func.MarketReaction == reaction).ToList();
+                reaction--;
+            }
+
+            return bestFunctionalities;    
         }
 
         private void Step4i(Company company)

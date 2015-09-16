@@ -92,7 +92,7 @@ namespace DiscreteEventProcessModel
 
             foreach (SimulationData data in mSimulationData)
             {
-                Funcionality func = new Funcionality(data.Functionality, null);
+                Funcionality func = new Funcionality(data.Functionality, data.MarketReaction);
 
                 mCompanies[0].addRequiredFuncionalityWithCost(func, data.WordPressCost);
                 mCompanies[1].addRequiredFuncionalityWithCost(func, data.JoomlaCost);
