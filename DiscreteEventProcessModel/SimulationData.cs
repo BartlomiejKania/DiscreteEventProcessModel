@@ -32,20 +32,20 @@ namespace DiscreteEventProcessModel
             set;
         }
 
-        public List<string> DependensOn
+        public string MarketReaction
         {
             get;
             set;
         }
 
         public SimulationData(string functionality, int wordPressCost, int joomlaCost, int drupalCost,
-            List<string> dependsOn)
+            string marketReaction)
         {
             Functionality = functionality;
             WordPressCost = wordPressCost;
             JoomlaCost = joomlaCost;
             DrupalCost = drupalCost;
-            DependensOn = dependsOn;
+            MarketReaction = marketReaction;
         }
     }
 }

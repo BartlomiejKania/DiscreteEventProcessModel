@@ -1,16 +1,16 @@
-Wydanie pierwszej stabilnej wersji systemu CMS:28:56:0:
-Nacisk na jakość pozycjonowania, zamiana miejscami elementów strony instalator z poziomu przeglądarki, rekurencyjne drzewo menu/podmenu:1:21:0:
-Architektura modułowa systemu, pluginy i wtyczki, rozbudowa systemu zarządzania plikami graficznymi:38:54:0:
-Rozbudowany system językowy, tłumaczenia panelu administracyjnego, ekspansja systemu na Świat:1:6:0:
-Rozbudowany system zarządzania wyglądem strony, komponenty oraz widgety, szablony i skórki:10:22:0:Rozbudowany system językowy, tłumaczenia panelu administracyjnego, ekspansja systemu na Świat
-Zarządzanie kontami użytkowników filtracja, systemy autoryzacji, anty-spam, profilowanie kont użytkowników:33:41:0:Nacisk na jakość pozycjonowania, zamiana miejscami elementów strony instalator z poziomu przeglądarki, rekurencyjne drzewo menu/podmenu
-Zaawansowane narzędzia WYSIWYG, RSS, metadane, Ajax, nacisk na pozycjonowanie:8:10:0:Nacisk na jakość pozycjonowania, zamiana miejscami elementów strony instalator z poziomu przeglądarki, rekurencyjne drzewo menu/podmenu
-Integracja z zewnętrznymi narzędziami, systemami typu blogger, oraz zaawansowane zarzadzanie plikami:13:14:0:
-Nowoczesne języki skryptowe JQuery, Mootols, automatyczny instalator pluginów:4:43:0:
-Nacisk na bezpieczeństwo, uwierzytelnianie, zgodność z standardami, szyfrowanie danych, antyspamboot:37:3:0:
-Kopie robocze, notatki zaawansowane techniki buforowania oraz backup-owania:19:26:0:Nacisk na bezpieczeństwo, uwierzytelnianie, zgodność z standardami, szyfrowanie danych, antyspamboot
-Multisites oraz multiposting – zarządzanie wieloma stronami z poziomu jednej instalacji:15:19:0:
-Rozwój panelu administratora, dashboard, zarządzanie pulpitami:6:4:0:Zaawansowane narzędzia WYSIWYG, RSS, metadane, Ajax, nacisk na pozycjonowanie
-Przełom w strukturze kodu źródłowego, zgodność ze standardami PHP 5 oraz MYSQL 5:3:3:0:Zaawansowane narzędzia WYSIWYG, RSS, metadane, Ajax, nacisk na pozycjonowanie
-Wydanie ostatniej stabilnej wersji systemu CMS:0:0:0:Przełom w strukturze kodu źródłowego, zgodność ze standardami PHP 5 oraz MYSQL 5;Zaawansowane narzędzia WYSIWYG, RSS, metadane, Ajax, nacisk na pozycjonowanie;Multisites oraz multiposting – zarządzanie wieloma stronami z poziomu jednej instalacji
+﻿Wydanie pierwszej stabilnej wersji systemu CMS:28:56:0:high growth
+Nacisk na jakość pozycjonowania, zamiana miejscami elementów strony instalator z poziomu przeglądarki, rekurencyjne drzewo menu/podmenu:1:21:0:high growth
+Architektura modułowa systemu, pluginy i wtyczki, rozbudowa systemu zarządzania plikami graficznymi:38:54:0:low growth
+Rozbudowany system językowy, tłumaczenia panelu administracyjnego, ekspansja systemu na Świat:1:6:0:stagnation
+Rozbudowany system zarządzania wyglądem strony, komponenty oraz widgety, szablony i skórki:10:22:0:high drop
+Zarządzanie kontami użytkowników filtracja, systemy autoryzacji, anty-spam, profilowanie kont użytkowników:33:41:0:high growth
+Zaawansowane narzędzia WYSIWYG, RSS, metadane, Ajax, nacisk na pozycjonowanie:8:10:0:high drop
+Integracja z zewnętrznymi narzędziami, systemami typu blogger, oraz zaawansowane zarzadzanie plikami:13:14:0:stagnation
+Nowoczesne języki skryptowe JQuery, Mootols, automatyczny instalator pluginów:4:43:0:low growth
+Nacisk na bezpieczeństwo, uwierzytelnianie, zgodność z standardami, szyfrowanie danych, antyspamboot:37:3:0:high growth
+Kopie robocze, notatki zaawansowane techniki buforowania oraz backup-owania:19:26:0:stagnation
+Multisites oraz multiposting – zarządzanie wieloma stronami z poziomu jednej instalacji:15:19:0:high growth
+Rozwój panelu administratora, dashboard, zarządzanie pulpitami:6:4:0:low drop
+Przełom w strukturze kodu źródłowego, zgodność ze standardami PHP 5 oraz MYSQL 5:3:3:0:stagnation
+Wydanie ostatniej stabilnej wersji systemu CMS:0:0:0:low growth
 

@@ -39,8 +39,6 @@ namespace DiscreteEventProcessModel
         public Form1()
         {
             InitializeComponent();
-            this.newDataGridView1.ListBoxCollection[0].DoubleClick +=
-                new EventHandler(ListBox1_DoubleClick);
         }
 
         private void startButton_Click(object sender, EventArgs e)
@@ -65,16 +63,16 @@ namespace DiscreteEventProcessModel
                 int wordPressCost = int.Parse(splittedVersion[1]);
                 int joomlaCost = int.Parse(splittedVersion[2]);
                 int drupalCost = int.Parse(splittedVersion[3]);
-                List<string> dependsOn = splittedVersion[4].Split(';').ToList();
+                string marketReaction = splittedVersion[4];
                 SimulationData data = new SimulationData(description, wordPressCost,
-                    joomlaCost, drupalCost, dependsOn);
+                    joomlaCost, drupalCost, marketReaction);
                 mSimulationData.Add(data);
                 descriptions.Add(description);
             }
 
             FillCompaniesFunctionalities();
 
-            newDataGridView1.DataSource = mSimulationData;
+            dataGridView1.DataSource = mSimulationData;
             newListBox4.Items.AddRange(descriptions.ToArray());
 
             loadDatabutton.Enabled = false;
@@ -94,7 +92,7 @@ namespace DiscreteEventProcessModel
 
             foreach (SimulationData data in mSimulationData)
             {
-                Funcionality func = new Funcionality(data.Functionality, data.DependensOn);
+                Funcionality func = new Funcionality(data.Functionality, null);
 
                 mCompanies[0].addRequiredFuncionalityWithCost(func, data.WordPressCost);
                 mCompanies[1].addRequiredFuncionalityWithCost(func, data.JoomlaCost);
@@ -108,35 +106,6 @@ namespace DiscreteEventProcessModel
         {
             //this.loadDatabutton_Click(null, null);
             //this.startButton_Click(null, null);
-        }
-
-        int rowIndex, columnIndex;
-
-        /// <summary>
-        /// When ListBox is double clicked, called this method.
-        /// Add select item of ListBox into appropriate cell of the DataGridView.
-        /// After then hide ListBox.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void ListBox1_DoubleClick(object sender, EventArgs e)
-        {
-            this.newDataGridView1[columnIndex, rowIndex].Value =
-                this.newDataGridView1.ListBoxCollection[0].SelectedItem.ToString();
-
-            this.newDataGridView1.ListBoxCollection[0].Visible = false;
-        }
-
-        /// <summary>
-        /// Get row index and column index of selected cell of the DataGridView.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void newDataGridView1_CellEnter
-        (object sender, DataGridViewCellEventArgs e)
-        {
-            rowIndex = e.RowIndex;
-            columnIndex = e.ColumnIndex;
         }
     }
 }
