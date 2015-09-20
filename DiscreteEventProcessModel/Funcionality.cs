@@ -8,8 +8,8 @@ namespace DiscreteEventProcessModel
 {
     public class Funcionality : IComparable<Funcionality>
     {
-        private static int nextId = 0;
-        private int mId;
+        public static int nextId = 0;
+        public int mId;
 
         public string Description { get; private set; }
 

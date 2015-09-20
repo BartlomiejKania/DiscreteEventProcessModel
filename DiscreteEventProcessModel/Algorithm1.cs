@@ -51,7 +51,7 @@ namespace DiscreteEventProcessModel
             }
         }
 
-        private void Step3i(Company company)
+         private void Step3i(Company company)
         {
             Console.Out.WriteLine("Step3i");
             IEnumerable<Company> otherCompanies = mAllComapnies.Where(c => c != company);

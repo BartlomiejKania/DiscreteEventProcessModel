@@ -8,6 +8,12 @@ namespace DiscreteEventProcessModel
 {
     public class SimulationData
     {
+        public string ID
+        {
+            get;
+            set;
+        }
+
         public string Functionality
         {
             get;
@@ -38,9 +44,10 @@ namespace DiscreteEventProcessModel
             set;
         }
 
-        public SimulationData(string functionality, int wordPressCost, int joomlaCost, int drupalCost,
+        public SimulationData(int id, string functionality, int wordPressCost, int joomlaCost, int drupalCost,
             string marketReaction)
         {
+            ID = id.ToString();
             Functionality = functionality;
             WordPressCost = wordPressCost;
             JoomlaCost = joomlaCost;

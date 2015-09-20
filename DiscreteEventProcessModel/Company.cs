@@ -8,7 +8,7 @@ namespace DiscreteEventProcessModel
 {
     public class Company
     {
-        private Dictionary<Funcionality, int> mFunctionalities = new Dictionary<Funcionality, int>();
+        public Dictionary<Funcionality, int> mFunctionalities = new Dictionary<Funcionality, int>();
         private Funcionality mCurrentlyDevelopedFuncionality;
 
         public enum CompanyState
@@ -33,7 +33,7 @@ namespace DiscreteEventProcessModel
 
         public Company()
         {
-            this.TimeToDevelopNextFunctionality = int.MaxValue;
+            //this.TimeToDevelopNextFunctionality = int.MaxValue;
             this.State = CompanyState.Idle;
             this.ImplementedFunctionalites = new List<Funcionality>();
         }
